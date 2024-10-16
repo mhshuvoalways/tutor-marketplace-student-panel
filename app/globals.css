@@ -1,0 +1,26 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html, body {
+  font-family: Arial, Helvetica, sans-serif;
+  overflow-x: hidden;
+}
+
+@layer base {
+  input::placeholder {
+    @apply text-gray-400;
+  }
+}
+
+@layer components {
+  .btn {
+    @apply rounded shadow py-3 px-6 font-outfit text-xl transition-all hover:shadow-sm text-center;
+  }
+  .linearBtn {
+    background: linear-gradient(105.69deg, #eab308 0%, #ef4444 43.23%);
+  }
+  .linearBtn:hover {
+    background: linear-gradient(105.69deg, #b88b05 0%, #c20f0f 43.23%);
+  }
+}
