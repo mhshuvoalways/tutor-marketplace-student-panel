@@ -1,7 +1,7 @@
 "use client";
 
 import { credentialLogin, socialLogin } from "@/app/actions";
-import Button from "@/app/components/common/button/Button";
+import Button from "@/app/components/common/button/Button1";
 import Input from "@/app/components/common/input/Input";
 import GoogleIcon from "@/public/icons/google.png";
 import LoginImage from "@/public/images/login.png";

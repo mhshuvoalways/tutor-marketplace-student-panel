@@ -43,6 +43,7 @@ const Search = () => {
           apiKey={process.env.GOOGLE_MAPS_API_KEY}
           onPlaceSelected={(place) => addressHandler(place.formatted_address)}
           className="outline-0 text-gray-700 font-outfit"
+          
         />
       </div>
       <div className="flex items-center gap-x-2">

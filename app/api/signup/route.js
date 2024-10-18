@@ -1,9 +1,9 @@
 import { signUpSchema } from "@/app/lib/validations/auth";
-import AdminProfileModel from "@/app/models/AdminProfileModel";
 import AuthModel from "@/app/models/AuthModel";
+import TutorProfileModel from "@/app/models/ProfileModel";
+import { dbConnect } from "@/app/services/mongodb";
 import bcrypt from "bcrypt";
 import { NextResponse } from "next/server";
-import { dbConnect } from "@/app/services/mongodb";
 
 export const POST = async (request) => {
   try {
@@ -12,23 +12,24 @@ export const POST = async (request) => {
       await request.json()
     );
     try {
-      const findUser = await AuthModel.findOne({ role: "admin" });
+      const findUser = await AuthModel.findOne({ email });
       if (!findUser) {
         const hashed = await bcrypt.hash(password, 10);
         const userObj = {
           email,
           password: hashed,
+          provider: "credential",
         };
         const auth = await new AuthModel(userObj).save();
         const profileObj = {
           name,
           user: auth._id,
         };
-        const response = await new AdminProfileModel(profileObj).save();
+        const response = await new TutorProfileModel(profileObj).save();
         return new NextResponse(JSON.stringify(response), { status: 200 });
       } else {
         return new NextResponse(
-          JSON.stringify({ message: "Admin already exit!" }),
+          JSON.stringify({ message: "Tutor already exit!" }),
           {
             status: 400,
           }

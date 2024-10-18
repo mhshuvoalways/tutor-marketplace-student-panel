@@ -1,5 +1,7 @@
+import { loginCredential } from "@/app/actions/loginCredential";
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
+import GoogleProvider from "next-auth/providers/google";
 import { authConfig } from "./auth.config";
 
 export const {
@@ -20,5 +22,28 @@ export const {
         return credentials;
       },
     }),
+    GoogleProvider({
+      clientId: process.env.AUTH_GOOGLE_ID,
+      clientSecret: process.env.AUTH_GOOGLE_SECRET,
+      authorization: {
+        params: {
+          prompt: "consent",
+          access_type: "offline",
+          response_type: "code",
+        },
+      },
+    }),
   ],
+  callbacks: {
+    async jwt({ token, account }) {
+      if (token && account !== "credentials") {
+        loginCredential(token);
+      }
+      return token;
+    },
+    async session({ session, token }) {
+      session.provider = token.provider;
+      return session;
+    },
+  },
 });

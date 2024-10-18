@@ -1,3 +1,4 @@
+import StoreProvider from "@/app/StoreProvider";
 import type { Metadata } from "next";
 import { Gochi_Hand, Outfit } from "next/font/google";
 import "./globals.css";
@@ -26,7 +27,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${outfit.variable} ${gochiHand.variable} bg-[#F7F8FC]`}>
-        {children}
+        <StoreProvider>{children}</StoreProvider>
       </body>
     </html>
   );

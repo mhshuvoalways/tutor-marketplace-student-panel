@@ -26,7 +26,7 @@ export const POST = async (request) => {
     }
     const hashedPassword = await bcrypt.hash(newPassword, 10);
     await AuthModel.findOneAndUpdate(
-      { role: "admin" },
+      { role: "student" },
       { password: hashedPassword },
       { new: true }
     );

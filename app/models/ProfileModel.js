@@ -7,9 +7,12 @@ const profileModel = new Schema(
       type: Types.ObjectId,
       ref: "auth",
     },
+    avatar: {
+      url: String,
+      public_id: String,
+    },
     name: {
       type: String,
-      required: true,
       trim: true,
     },
   },
@@ -18,4 +21,4 @@ const profileModel = new Schema(
   }
 );
 
-export default models.adminProfile ?? model("adminProfile", profileModel);
+export default models.studentProfile ?? model("studentProfile", profileModel);
