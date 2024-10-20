@@ -1,4 +1,4 @@
-import myAccountSlice from "@/app/lib/store/features/myAccountSlice";
+import myAccountSlice from "@/store/features/myAccountSlice";
 import { configureStore } from "@reduxjs/toolkit";
 
 export const makeStore = () => {

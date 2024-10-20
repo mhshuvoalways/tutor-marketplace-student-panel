@@ -3,7 +3,7 @@ import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-function DropDown({ menuButton, menus }) {
+function DropDown({ menuButton, menus, session }) {
   const pathname = usePathname();
 
   return (
@@ -38,9 +38,15 @@ function DropDown({ menuButton, menus }) {
           );
         })}
         <div className="m-5">
-          <Link href={"/login"}>
-            <Button title="Login" />
-          </Link>
+          {session.status === "authenticated" ? (
+            <Link href={"/my-account"}>
+              <Button title="My Account" />
+            </Link>
+          ) : (
+            <Link href={"/login"}>
+              <Button title="Login" />
+            </Link>
+          )}
         </div>
       </MenuItems>
     </Menu>

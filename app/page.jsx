@@ -5,13 +5,16 @@ import MotionPrimitiveComponent from "@/app/components/motionPrimitivesComponent
 import QualifiedTutors from "@/app/components/qualifiedTutors";
 import Reviews from "@/app/components/reviews";
 import Services from "@/app/components/services";
+import { SessionProvider } from "next-auth/react";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
 
 const page = () => {
   return (
     <>
-      <Header />
+      <SessionProvider>
+        <Header />
+      </SessionProvider>
       <main className="mt-20">
         <MotionPrimitiveComponent>
           <Hero />

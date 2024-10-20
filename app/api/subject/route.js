@@ -1,5 +1,5 @@
-import SubjectModel from "@/app/models/SubjectModel";
-import { dbConnect } from "@/app/services/mongodb";
+import SubjectModel from "@/models/SubjectModel";
+import { dbConnect } from "@/db/mongodb";
 import { NextResponse } from "next/server";
 
 export const GET = async () => {

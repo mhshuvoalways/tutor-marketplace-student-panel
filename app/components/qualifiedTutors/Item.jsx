@@ -12,8 +12,10 @@ const Item = ({ image, name, jobTitle, startingFrom, grade, subject }) => {
             <h4 className="text-lg font-semibold">{name}</h4>
             <CircleCheckBig className="size-5 text-green-500" />
           </div>
-          <span>{jobTitle}</span>
-          <Rating value={4.5} activeColor="#ef4444" size={24} />
+          <div className="flex items-center gap-2">
+            <span>{jobTitle}</span>
+            <Rating value={4.5} activeColor="#ef4444" size={24} />
+          </div>
         </div>
       </div>
       <div className="space-y-2">

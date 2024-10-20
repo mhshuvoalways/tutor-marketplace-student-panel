@@ -1,10 +1,10 @@
-import AuthModel from "@/app/models/AuthModel";
-import TutorProfileModel from "@/app/models/ProfileModel";
-import { dbConnect } from "@/app/services/mongodb";
+import { dbConnect } from "@/db/mongodb";
+import AuthModel from "@/models/AuthModel";
+import TutorProfileModel from "@/models/ProfileModel";
 import { NextResponse } from "next/server";
 
-export const loginCredential = async (data) => {
-  const { name, email, picture } = data;  
+export const loginGoogle = async (data) => {
+  const { name, email, picture } = data;
   try {
     await dbConnect();
     const findUser = await AuthModel.findOne({ email });

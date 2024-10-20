@@ -1,5 +1,5 @@
-import GradeModel from "@/app/models/GradeModel";
-import { dbConnect } from "@/app/services/mongodb";
+import GradeModel from "@/models/GradeModel";
+import { dbConnect } from "@/db/mongodb";
 import { NextResponse } from "next/server";
 
 export const GET = async () => {

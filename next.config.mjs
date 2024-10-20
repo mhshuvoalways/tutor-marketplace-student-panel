@@ -4,6 +4,18 @@ const nextConfig = {
     TUTOR_PANEL: process.env.TUTOR_PANEL,
     GOOGLE_MAPS_API_KEY: process.env.GOOGLE_MAPS_API_KEY,
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: "http",
+        hostname: "res.cloudinary.com",
+      },
+      {
+        protocol: "https",
+        hostname: "lh3.googleusercontent.com",
+      },
+    ],
+  },
 };
 
 export default nextConfig;

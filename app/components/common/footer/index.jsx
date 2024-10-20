@@ -16,7 +16,7 @@ const index = () => {
               pains and troubles they are about to experience, darkened by greed
               that does not provide mikume.
             </p>
-            <Link href={process.env.TUTOR_PANEL}>
+            <Link href={process.env.TUTOR_PANEL} target="blank">
               <button className="btn py-1.5 px-3 bg-white hover:bg-gray-100 text-black flex items-center gap-x-2 mt-10">
                 Join as a Tutor
                 <small className="text-secondary font-gochiHand">{`It's free!`}</small>

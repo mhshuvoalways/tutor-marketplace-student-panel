@@ -1,24 +1,17 @@
 "use client";
 
-import ReactStars from "react-rating-stars-component";
+import Rating from "react-rating";
 
-const index = ({
-  count = 5,
-  ratingChanged,
-  size,
-  activeColor,
-  value,
-  edit = false,
-}) => {
+const index = ({ value = 5, edit, ratingChanged }) => {
   return (
-    <ReactStars
-      count={count}
-      isHalf={true}
-      edit={edit}
+    <Rating
+      initialRating={value}
+      emptySymbol="fa-regular fa-star"
+      readonly={edit ? false : true}
+      fullSymbol="fa-solid fa-star"
+      fractions={2}
+      className="text-yellow-500 text-xl"
       onChange={ratingChanged}
-      size={size}
-      activeColor={activeColor}
-      value={value}
     />
   );
 };

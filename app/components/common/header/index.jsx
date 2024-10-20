@@ -4,6 +4,7 @@ import Button from "@/app/components/common/button/Button1";
 import DropDown from "@/app/components/common/header/DropDown";
 import LogoImage from "@/public/images/logo.png";
 import { Menu } from "lucide-react";
+import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -25,6 +26,9 @@ const Header = () => {
   const [scrollDirection, setScrollDirection] = useState(true);
 
   const pathname = usePathname();
+
+  const session = useSession();
+  // console.log(session);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -60,7 +64,7 @@ const Header = () => {
               <Link
                 href={el.url}
                 key={el.name}
-                className={`hover:text-primary transition ${
+                className={`hover:text-primary transition text-nowrap ${
                   isActive ? "text-primary" : ""
                 }`}
               >
@@ -68,15 +72,24 @@ const Header = () => {
               </Link>
             );
           })}
-          <Link href={"/login"}>
-            <Button title={"Login"} className={"!py-1.5"}></Button>
-          </Link>
+          {session.status === "loading" ? (
+            <Button title={"Loading"} className={"!py-1.5"}></Button>
+          ) : session.status === "authenticated" ? (
+            <Link href={"/my-account"}>
+              <Button title={"My Account"} className={"!py-1.5"}></Button>
+            </Link>
+          ) : (
+            <Link href={"/login"}>
+              <Button title={"Login"} className={"!py-1.5"}></Button>
+            </Link>
+          )}
         </div>
         <div className="block sm:hidden">
           <DropDown
             menuButton={
               <Menu className="bg-primary/90 text-white p-1.5 size-9 rounded hover:bg-primary" />
             }
+            session={session}
             menus={menus}
           />
         </div>

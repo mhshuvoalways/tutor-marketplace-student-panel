@@ -5,7 +5,7 @@ import Image from "next/image";
 const index = () => {
   return (
     <div className="relative">
-      <Image src={PatternImage} alt="" className="absolute inset-0" />
+      <Image src={PatternImage} alt="" className="absolute inset-0 -z-10" />
       <div className="container mx-auto px-5 py-20">
         <p className="text-4xl font-medium font-outfit">
           See how our Students <br /> made their{" "}

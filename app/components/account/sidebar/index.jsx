@@ -1,5 +1,6 @@
 "use client";
 
+import { logout } from "@/actions";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -39,13 +40,12 @@ const Account = () => {
             </div>
           );
         })}
-        <div>
-          <Link href={"/login"}>
-            <p className="cursor-pointer hover:bg-slate-100 py-1 px-5 rounded transition text-lg text-nowrap">
-              Logout
-            </p>
-          </Link>
-        </div>
+        <p
+          className="cursor-pointer hover:bg-slate-100 py-1 px-5 rounded transition text-lg text-nowrap"
+          onClick={() => logout()}
+        >
+          Logout
+        </p>
       </div>
     </div>
   );

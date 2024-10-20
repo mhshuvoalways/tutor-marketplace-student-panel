@@ -1,7 +1,7 @@
-import { authConfig } from "@/app/auth.config";
-import AuthModel from "@/app/models/AuthModel";
-import AvailabilityModel from "@/app/models/AvailabilityModel";
-import { dbConnect } from "@/app/services/mongodb";
+import { authConfig } from "@/auth.config";
+import AuthModel from "@/models/AuthModel";
+import AvailabilityModel from "@/models/AvailabilityModel";
+import { dbConnect } from "@/services/mongodb";
 import NextAuth from "next-auth";
 import { NextResponse } from "next/server";
 
