@@ -1,30 +1,23 @@
 import Rating from "@/app/components/common/rating";
-import TutorImage from "@/public/images/tutor.jpg";
+import Parse from "html-react-parser";
 import { CircleCheckBig, MapPin, Video } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import Button from "../common/button/Button2";
+import Button from "@/app/components/common/button/Button2";
 
-const days = ["MON", "TUE", "WEB", "THU", "FRI", "SAT", "SUN"];
-const subjectsItems = [
-  { id: 1, name: "Science" },
-  { id: 2, name: "Math" },
-  { id: 3, name: "English" },
-  { id: 4, name: "Accounting" },
-  { id: 5, name: "Programming" },
-];
-
-const Tutors = () => {
+const Tutors = ({ tutor, availability }) => {
   return (
     <div className="bg-white shadow rounded p-5">
-      <div className="flex flex-wrap md:flex-nowrap items-end gap-y-5 gap-x-10">
+      <div className="flex flex-wrap md:flex-nowrap items-start gap-y-5 gap-x-10">
         <div className="w-full md:w-3/12">
           <Image
-            src={TutorImage}
+            src={tutor?.avatar?.url}
             alt=""
             className="size-full mx-auto rounded object-cover"
+            width={500}
+            height={500}
           />
-          <Link href="/tutors/arianne-kearns">
+          <Link href={`/tutors/${tutor._id}`}>
             <Button title=" View Profile" />
           </Link>
         </div>
@@ -33,19 +26,19 @@ const Tutors = () => {
             <div>
               <div className="flex items-center gap-x-2">
                 <h4 className="text-lg font-semibold font-outfit">
-                  Arianne Kearns
+                  {tutor.name}
                 </h4>
                 <CircleCheckBig className="size-5 text-green-500" />
               </div>
               <div className="flex items-center gap-x-5">
                 <div className="flex items-center gap-x-1 text-gray-500">
                   <MapPin />
-                  <span>Charlotte, UK</span>
+                  <span>{tutor.location}</span>
                 </div>
                 <div className="flex items-center gap-x-1.5 font-outfit">
-                  <p className="font-semibold">5.0</p>
+                  <p className="font-semibold">{tutor.rating}.0</p>
                   <Rating
-                    value={4.5}
+                    value={tutor.rating}
                     count={1}
                     activeColor="#facc15"
                     size={24}
@@ -57,21 +50,35 @@ const Tutors = () => {
             <div className="mt-5 sm:mt-0 w-full sm:w-auto rounded sm:rounded-none py-2 px-4 sm:py-0 sm:px-0 flex sm:block justify-between bg-slate-100 sm:bg-white">
               <p className="text-gray-500">Starting from:</p>
               <p className="font-semibold text-secondary text-lg font-outfit">
-                ${23}.00/hr
+                ${tutor.hourlyRate}.00/hr
               </p>
             </div>
+          </div>
+          <div className="flex flex-wrap items-center gap-3 mt-5">
+            {tutor.grades.map((grade) => (
+              <small
+                key={grade._id}
+                className="bg-slate-100 rounded px-3 py-1 font-bold text-gray-500"
+              >
+                {grade.item}
+              </small>
+            ))}
           </div>
           <div className="font-outfit flex flex-wrap md:flex-nowrap gap-x-4 gap-y-2 mt-5">
             <p>Availability</p>
             <div className="flex flex-wrap items-center gap-3">
-              {days.map((d) => (
-                <small
-                  key={d}
-                  className="bg-green-50 rounded px-1 md:px-3 py-1 border"
-                >
-                  {d}
-                </small>
-              ))}
+              {availability.map((avil, index) => {
+                return (
+                  avil.user === tutor.user && (
+                    <small
+                      key={index}
+                      className="bg-green-50 rounded px-1 md:px-3 py-1 border uppercase"
+                    >
+                      {avil.day.slice(0, 3)}
+                    </small>
+                  )
+                );
+              })}
             </div>
           </div>
           <div className="mt-5">
@@ -79,48 +86,37 @@ const Tutors = () => {
               You can get teaching service direct at
             </p>
             <div className="mt-2 grid grid-cols-2 lg:grid-cols-4 gap-3 text-nowrap">
-              <div className="inline-flex items-center justify-center gap-x-2 bg-slate-50 py-2 px-3 w-full rounded">
-                <div>
-                  <Video className="text-red-400" />
+              {tutor.availableOn.map((method, index) => (
+                <div
+                  className="inline-flex items-center justify-center gap-x-3 sm:gap-x-5 bg-slate-50 py-2 px-3 w-full rounded"
+                  key={index}
+                >
+                  {method === "Online" && <Video className="text-red-400" />}
+                  {method === "Offline" && <MapPin className="text-blue-400" />}
+                  {method === "Tutor place" && (
+                    <MapPin className="text-red-400" />
+                  )}
+                  {method === "Student place" && (
+                    <MapPin className="text-red-400" />
+                  )}
+                  <p>{method}</p>
                 </div>
-                <p>Online</p>
-              </div>
-              <div className="inline-flex items-center justify-center gap-x-2 bg-slate-50 py-2 px-3 w-full rounded">
-                <div>
-                  <MapPin className="text-blue-400" />
-                </div>
-                <p>Offline</p>
-              </div>
-              <div className="inline-flex items-center justify-center gap-x-2 bg-slate-50 py-2 px-3 w-full rounded">
-                <div>
-                  <MapPin className="text-red-400" />
-                </div>
-                <p>Student place</p>
-              </div>
-              <div className="inline-flex items-center justify-center gap-x-2 bg-slate-50 py-2 px-3 w-full rounded">
-                <div>
-                  <MapPin className="text-red-400" />
-                </div>
-                <p>Tutor place</p>
-              </div>
+              ))}
             </div>
           </div>
-          <p className="mt-5 text-gray-500 line-clamp-2">
-            On the other hand, we denounce with righteous indignation and
-            dislike men who are so beguiled and demoralized by the charms of
-            pleasure of the moment, so blinded by desire, that they cannot
-            foresee the pain and trouble
-          </p>
           <div className="flex flex-wrap items-center gap-3 mt-5">
-            {subjectsItems.map((subject) => (
+            {tutor.subjects.map((subject) => (
               <small
-                key={subject.id}
+                key={subject._id}
                 className="bg-slate-100 rounded px-3 py-1 font-bold text-gray-500"
               >
-                {subject.name}
+                {subject.item}
               </small>
             ))}
           </div>
+          <p className="mt-5 text-gray-500 line-clamp-2">
+            {tutor.bio && Parse(tutor.bio)}
+          </p>
         </div>
       </div>
     </div>

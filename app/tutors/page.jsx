@@ -4,7 +4,7 @@ import Filter from "@/app/components/filter";
 import MotionPrimitiveComponent from "@/app/components/motionPrimitivesComponent/InView";
 import { SessionProvider } from "next-auth/react";
 
-const page = () => {
+const page = ({ searchParams }) => {
   return (
     <>
       <SessionProvider>
@@ -12,7 +12,7 @@ const page = () => {
       </SessionProvider>
       <main className="mt-20">
         <MotionPrimitiveComponent>
-          <Filter />
+          <Filter searchValue={searchParams} />
         </MotionPrimitiveComponent>
       </main>
       <Footer />

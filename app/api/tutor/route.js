@@ -1,11 +1,15 @@
 import { dbConnect } from "@/db/mongodb";
-import AvailabilityModel from "@/models/AvailabilityModel";
+import TutorProfileModel from "@/models/TutorProfileModel";
 import { NextResponse } from "next/server";
+import "@/models/GradeModel";
+import "@/models/SubjectModel";
 
 export const GET = async () => {
   try {
     await dbConnect();
-    const response = await AvailabilityModel.find();
+    const response = await TutorProfileModel.find()
+      .populate("subjects")
+      .populate("grades");
     return new NextResponse(JSON.stringify(response), { status: 200 });
   } catch {
     return new NextResponse(

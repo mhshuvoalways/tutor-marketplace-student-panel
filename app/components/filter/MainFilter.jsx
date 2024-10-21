@@ -4,7 +4,7 @@ import Filter from "@/app/components/filter/Filter";
 import ToggleArrow from "@/app/components/filter/ToggleArrow";
 import { useState } from "react";
 
-const MainFilter = () => {
+const MainFilter = ({ searchValue }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -23,7 +23,7 @@ const MainFilter = () => {
       >
         <ToggleArrow isOpen={isOpen} setIsOpen={setIsOpen} />
         <div className="shadow bg-white rounded p-5 space-y-6 font-outfit">
-          <Filter />
+          <Filter searchValue={searchValue} />
         </div>
       </div>
     </>

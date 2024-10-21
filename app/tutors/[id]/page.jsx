@@ -4,7 +4,7 @@ import MotionPrimitiveComponent from "@/app/components/motionPrimitivesComponent
 import Tutor from "@/app/components/tutor";
 import { SessionProvider } from "next-auth/react";
 
-const page = () => {
+const page = ({ params }) => {
   return (
     <>
       <SessionProvider>
@@ -12,7 +12,7 @@ const page = () => {
       </SessionProvider>
       <main className="mt-20">
         <MotionPrimitiveComponent>
-          <Tutor />
+          <Tutor tutorId={params.id} />
         </MotionPrimitiveComponent>
       </main>
       <Footer />
