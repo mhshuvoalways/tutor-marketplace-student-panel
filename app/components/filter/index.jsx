@@ -2,6 +2,7 @@ import Search from "@/app/components/common/search";
 import MainFilter from "@/app/components/filter/MainFilter";
 import Tutors from "@/app/components/filter/Tutors";
 import ShapeImage from "@/public/images/shape.png";
+import convertScheduleFormat from "@/services/convertScheduleFormat";
 import Image from "next/image";
 
 const Index = async ({ searchValue }) => {
@@ -14,7 +15,7 @@ const Index = async ({ searchValue }) => {
   });
 
   const result = await response.json();
-  const resultAvailability = await availability.json();
+  const resultAvailability = convertScheduleFormat(await availability.json());
 
   const filteredTutors = result.filter((tutor) => {
     const isLocationMatch =

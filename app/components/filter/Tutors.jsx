@@ -1,9 +1,9 @@
+import Button from "@/app/components/common/button/Button2";
 import Rating from "@/app/components/common/rating";
 import Parse from "html-react-parser";
 import { CircleCheckBig, MapPin, Video } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import Button from "@/app/components/common/button/Button2";
 
 const Tutors = ({ tutor, availability }) => {
   return (
@@ -69,7 +69,7 @@ const Tutors = ({ tutor, availability }) => {
             <div className="flex flex-wrap items-center gap-3">
               {availability.map((avil, index) => {
                 return (
-                  avil.user === tutor.user && (
+                  avil.user === tutor.user.toString() && (
                     <small
                       key={index}
                       className="bg-green-50 rounded px-1 md:px-3 py-1 border uppercase"

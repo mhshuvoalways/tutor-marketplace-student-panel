@@ -2,7 +2,7 @@ import Rating from "@/app/components/common/rating";
 import { CircleCheckBig, MapPin, Video } from "lucide-react";
 import Image from "next/image";
 
-const Tutors = ({ result, availability }) => {
+const Tutors = ({ result }) => {
   return (
     <div className="bg-white shadow rounded p-5">
       <div className="flex flex-wrap md:flex-nowrap items-start gap-y-5 gap-x-10">
@@ -60,20 +60,16 @@ const Tutors = ({ result, availability }) => {
           </div>
           <div className="font-outfit flex flex-wrap md:flex-nowrap gap-x-4 gap-y-2 mt-5">
             <p>Availability</p>
-            <div className="flex flex-wrap items-center gap-3">
-              {availability.map((avil, index) => {
-                return (
-                  avil.user === result.user && (
-                    <small
-                      key={index}
-                      className="bg-green-50 rounded px-1 md:px-3 py-1 border uppercase"
-                    >
-                      {avil.day.slice(0, 3)}
-                    </small>
-                  )
-                );
-              })}
-            </div>
+            {result.availability.map((avail) => (
+              <div
+                className="flex flex-wrap items-center gap-3"
+                key={avail.day}
+              >
+                <small className="bg-green-50 rounded px-1 md:px-3 py-1 border uppercase">
+                  {avail?.day.slice(0, 3)}
+                </small>
+              </div>
+            ))}
           </div>
           <div className="mt-5">
             <p className="font-outfit">

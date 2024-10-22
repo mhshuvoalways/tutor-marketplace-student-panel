@@ -9,7 +9,7 @@ interface Props {
   dateHandler: (date: Date) => void;
 }
 
-const Calendar: React.FC<Props> = () => {
+const Calendar: React.FC<Props> = ({ dateHandler }) => {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
 
@@ -67,7 +67,7 @@ const Calendar: React.FC<Props> = () => {
         return;
       }
       setSelectedDate(newDate);
-      //   dateHandler(newDate);
+      dateHandler(newDate);
     }
   };
 
