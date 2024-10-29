@@ -101,9 +101,9 @@ function getTimeSlots(timeAvailables, busySlots, minHours) {
   // Helper function to convert time in "12:00AM" format to minutes since start of the day
   const timeToMinutes = (time) => {
     const [timePart, modifier] = time.split(/(AM|PM)/);
-    let [hours, minutes] = timePart.split(':').map(Number);
-    if (modifier === 'PM' && hours !== 12) hours += 12;
-    if (modifier === 'AM' && hours === 12) hours = 0;
+    let [hours, minutes] = timePart.split(":").map(Number);
+    if (modifier === "PM" && hours !== 12) hours += 12;
+    if (modifier === "AM" && hours === 12) hours = 0;
     return hours * 60 + minutes;
   };
 
@@ -147,8 +147,16 @@ function getTimeSlots(timeAvailables, busySlots, minHours) {
       // If the slot is available, add it to the results
       if (slotAvailable && nextSlotEnd <= availableEnd) {
         results.push({
-          startedTime: allAvailability[allAvailability.indexOf(available.startedTime) + (currentSlotStart - availableStart) / 15],
-          endedTime: allAvailability[allAvailability.indexOf(available.startedTime) + (nextSlotEnd - availableStart) / 15],
+          startedTime:
+            allAvailability[
+              allAvailability.indexOf(available.startedTime) +
+                (currentSlotStart - availableStart) / 15
+            ],
+          endedTime:
+            allAvailability[
+              allAvailability.indexOf(available.startedTime) +
+                (nextSlotEnd - availableStart) / 15
+            ],
         });
         currentSlotStart = nextSlotEnd;
       }

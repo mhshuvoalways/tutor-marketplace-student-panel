@@ -22,11 +22,6 @@ export const POST = async (request) => {
       return serverError();
     }
   } catch {
-    return new NextResponse(
-      JSON.stringify({
-        message: "You are too late or something went wrong!",
-      }),
-      { status: 400 }
-    );
+    serverError();
   }
 };

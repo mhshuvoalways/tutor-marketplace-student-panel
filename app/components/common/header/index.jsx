@@ -28,7 +28,6 @@ const Header = () => {
   const pathname = usePathname();
 
   const session = useSession();
-  // console.log(session);
 
   useEffect(() => {
     const handleScroll = () => {

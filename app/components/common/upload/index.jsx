@@ -18,9 +18,16 @@ const UploadImage = ({ imageHandler }) => {
 
   const handleDrop = (acceptedFiles) => {
     setIsDragging(false);
-    imageHandler(acceptedFiles);
+    const imageFiles = acceptedFiles.filter((file) =>
+      file.type.startsWith("image/")
+    );
+    if (imageFiles.length > 0) {
+      imageHandler(imageFiles);
+    } else {
+      alert("Please upload only image files!");
+    }
   };
-
+  
   return (
     <Dropzone
       onDrop={handleDrop}

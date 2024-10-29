@@ -3,6 +3,16 @@ import { CircleCheckBig, MapPin, Video } from "lucide-react";
 import Image from "next/image";
 
 const Tutors = ({ result }) => {
+  let totalReviews = 0;
+  let reviewsLength = 0;
+
+  result.bookings.map((el) => {
+    if (el.review) {
+      totalReviews = totalReviews + el.review;
+      reviewsLength++;
+    }
+  });
+
   return (
     <div className="bg-white shadow rounded p-5">
       <div className="flex flex-wrap md:flex-nowrap items-start gap-y-5 gap-x-10">
@@ -30,14 +40,11 @@ const Tutors = ({ result }) => {
                   <span>{result?.location}</span>
                 </div>
                 <div className="flex items-center gap-x-1.5 font-outfit">
-                  <p className="font-semibold">{result?.rating}.0</p>
-                  <Rating
-                    value={result?.rating}
-                    count={1}
-                    activeColor="#facc15"
-                    size={24}
-                  />
-                  <p className="text-gray-500">(06)</p>
+                  <p className="font-semibold">
+                    {totalReviews / reviewsLength || 0}
+                  </p>
+                  <Rating value={totalReviews / reviewsLength || 0} />
+                  <p className="text-gray-500">({totalReviews || 0})</p>
                 </div>
               </div>
             </div>

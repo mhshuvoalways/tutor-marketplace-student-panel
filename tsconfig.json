@@ -29,7 +29,10 @@
     "app/components/common/header/index.jsx",
     "app/layout.js",
     "app/tutors/page.jsx",
-    "app/components/qualifiedTutors/index.jsx"
-, "app/page.jsx", "app/components/common/upload/index.jsx", "app/components/common/dialog/index.jsx"  ],
+    "app/components/qualifiedTutors/index.jsx",
+    "app/page.jsx",
+    "app/components/common/upload/index.jsx",
+    "app/components/common/dialog/index.jsx"
+  ],
   "exclude": ["node_modules"]
 }

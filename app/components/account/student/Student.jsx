@@ -41,7 +41,8 @@ const Student = () => {
         name: data?.name,
       });
     }
-  }, [data?.name, password]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data?.name]);
 
   let src = "";
   if (image) {
@@ -101,7 +102,7 @@ const Student = () => {
                 <p className="text-2xl">{data?.name}</p>
                 <p className="text-gray-700">{data?.email}</p>
               </div>
-              <p className="text-gray-400">Max file size is 2 MB</p>
+              <p className="text-gray-400">Max file size is 10 MB</p>
             </div>
           </div>
           <UploadImage imageHandler={imageHandler} />
@@ -181,7 +182,7 @@ const Student = () => {
           )}
         </div>
       </div>
-      {true && (
+      {successMessage && (
         <p className="text-green-400 text-center mt-5">{successMessage}</p>
       )}
     </div>

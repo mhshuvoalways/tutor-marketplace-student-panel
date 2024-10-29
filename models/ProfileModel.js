@@ -21,4 +21,4 @@ const profileModel = new Schema(
   }
 );
 
-export default models.studentProfile ?? model("studentProfile", profileModel);
+export default models.studentprofile ?? model("studentprofile", profileModel);

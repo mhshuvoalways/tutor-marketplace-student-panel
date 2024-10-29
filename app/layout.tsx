@@ -1,7 +1,7 @@
+import "@/app/globals.css";
 import StoreProvider from "@/app/StoreProvider";
 import type { Metadata } from "next";
 import { Gochi_Hand, Outfit } from "next/font/google";
-import "./globals.css";
 
 const outfit = Outfit({
   subsets: ["latin"],
@@ -15,23 +15,17 @@ const gochiHand = Gochi_Hand({
 });
 
 export const metadata: Metadata = {
-  title: "Tim's Tutors",
+  title: "Tutor marketplace | Tim's tutor",
   description: "Tim's Tutors is a tutors marketplace",
 };
 
-export default function RootLayout({
+export default function TutorLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
     <html lang="en">
-      <head>
-        <link
-          rel="stylesheet"
-          href="https://site-assets.fontawesome.com/releases/v6.6.0/css/all.css"
-        />
-      </head>
       <body className={`${outfit.variable} ${gochiHand.variable} bg-[#F7F8FC]`}>
         <StoreProvider>{children}</StoreProvider>
       </body>

@@ -1,5 +1,5 @@
 import { dbConnect } from "@/db/mongodb";
-import recoverPass from "@/lib/mail/template";
+import recoverPass from "@/lib/mail/recoverPass";
 import AuthModel from "@/models/AuthModel";
 import serverError from "@/services/serverError";
 import jwt from "jsonwebtoken";

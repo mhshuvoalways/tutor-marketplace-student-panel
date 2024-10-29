@@ -1,6 +1,7 @@
 import { dbConnect } from "@/db/mongodb";
 import AuthModel from "@/models/AuthModel";
 import ProfileModel from "@/models/ProfileModel";
+import serverError from "@/services/serverError";
 import bcrypt from "bcrypt";
 import { NextResponse } from "next/server";
 
@@ -32,9 +33,6 @@ export const POST = async (request) => {
       );
     }
   } catch {
-    return new NextResponse(
-      JSON.stringify({ message: "Server error occured!" }),
-      { status: 500 }
-    );
+    serverError();
   }
 };

@@ -1,5 +1,6 @@
-import GradeModel from "@/models/GradeModel";
 import { dbConnect } from "@/db/mongodb";
+import GradeModel from "@/models/GradeModel";
+import serverError from "@/services/serverError";
 import { NextResponse } from "next/server";
 
 export const GET = async () => {
@@ -8,11 +9,6 @@ export const GET = async () => {
     const response = await GradeModel.find();
     return new NextResponse(JSON.stringify(response), { status: 200 });
   } catch {
-    return new NextResponse(
-      JSON.stringify({ message: "Server error occured" }),
-      {
-        status: 500,
-      }
-    );
+    return serverError();
   }
 };

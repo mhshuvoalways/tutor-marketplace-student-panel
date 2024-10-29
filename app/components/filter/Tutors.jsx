@@ -1,5 +1,6 @@
 import Button from "@/app/components/common/button/Button2";
 import Rating from "@/app/components/common/rating";
+import Avaiability from "@/app/components/tutor/Availablity";
 import Parse from "html-react-parser";
 import { CircleCheckBig, MapPin, Video } from "lucide-react";
 import Image from "next/image";
@@ -17,7 +18,7 @@ const Tutors = ({ tutor, availability }) => {
             width={500}
             height={500}
           />
-          <Link href={`/tutors/${tutor._id}`}>
+          <Link href={`/tutors/${tutor.user}`}>
             <Button title=" View Profile" />
           </Link>
         </div>
@@ -36,14 +37,9 @@ const Tutors = ({ tutor, availability }) => {
                   <span>{tutor.location}</span>
                 </div>
                 <div className="flex items-center gap-x-1.5 font-outfit">
-                  <p className="font-semibold">{tutor.rating}.0</p>
-                  <Rating
-                    value={tutor.rating}
-                    count={1}
-                    activeColor="#facc15"
-                    size={24}
-                  />
-                  <p className="text-gray-500">(06)</p>
+                  <p className="font-semibold">{tutor.averageReview || 0}</p>
+                  <Rating value={tutor.averageReview || 0} />
+                  <p className="text-gray-500">({tutor.totalReviews || 0})</p>
                 </div>
               </div>
             </div>
@@ -55,7 +51,7 @@ const Tutors = ({ tutor, availability }) => {
             </div>
           </div>
           <div className="flex flex-wrap items-center gap-3 mt-5">
-            {tutor.grades.map((grade) => (
+            {tutor.grades?.map((grade) => (
               <small
                 key={grade._id}
                 className="bg-slate-100 rounded px-3 py-1 font-bold text-gray-500"
@@ -64,29 +60,13 @@ const Tutors = ({ tutor, availability }) => {
               </small>
             ))}
           </div>
-          <div className="font-outfit flex flex-wrap md:flex-nowrap gap-x-4 gap-y-2 mt-5">
-            <p>Availability</p>
-            <div className="flex flex-wrap items-center gap-3">
-              {availability.map((avil, index) => {
-                return (
-                  avil.user === tutor.user.toString() && (
-                    <small
-                      key={index}
-                      className="bg-green-50 rounded px-1 md:px-3 py-1 border uppercase"
-                    >
-                      {avil.day.slice(0, 3)}
-                    </small>
-                  )
-                );
-              })}
-            </div>
-          </div>
+          <Avaiability tutor={tutor} availability={availability} />
           <div className="mt-5">
             <p className="font-outfit">
               You can get teaching service direct at
             </p>
             <div className="mt-2 grid grid-cols-2 lg:grid-cols-4 gap-3 text-nowrap">
-              {tutor.availableOn.map((method, index) => (
+              {tutor.availableOn?.map((method, index) => (
                 <div
                   className="inline-flex items-center justify-center gap-x-3 sm:gap-x-5 bg-slate-50 py-2 px-3 w-full rounded"
                   key={index}
@@ -105,7 +85,7 @@ const Tutors = ({ tutor, availability }) => {
             </div>
           </div>
           <div className="flex flex-wrap items-center gap-3 mt-5">
-            {tutor.subjects.map((subject) => (
+            {tutor.subjects?.map((subject) => (
               <small
                 key={subject._id}
                 className="bg-slate-100 rounded px-3 py-1 font-bold text-gray-500"

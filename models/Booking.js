@@ -5,11 +5,11 @@ const bookingModel = new Schema(
   {
     student: {
       type: Types.ObjectId,
-      ref: "auth",
+      ref: "studentprofile",
     },
     tutor: {
       type: Types.ObjectId,
-      ref: "auth",
+      ref: "tutorprofile",
     },
     date: {
       type: Date,
@@ -31,13 +31,31 @@ const bookingModel = new Schema(
       trim: true,
     },
     session: {
-      type: String,
+      type: Number,
       required: true,
-      trim: true,
     },
     fee: {
       type: Number,
       required: true,
+    },
+    tutorFee: {
+      type: Number,
+      required: true,
+    },
+    tutorJoinLink: {
+      type: String,
+      required: true,
+    },
+    studentJoinLink: {
+      type: String,
+      required: true,
+    },
+    review: {
+      type: Number,
+    },
+    reviewText: {
+      type: String,
+      trim: true,
     },
   },
   {

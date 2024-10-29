@@ -1,5 +1,6 @@
 import { dbConnect } from "@/db/mongodb";
 import AuthModel from "@/models/AuthModel";
+import serverError from "@/services/serverError";
 import bcrypt from "bcrypt";
 import { NextResponse } from "next/server";
 
@@ -10,7 +11,7 @@ export const POST = async (request) => {
     const user = await AuthModel.findOne({
       email,
     });
-    if (user && user.provider === "credential") {
+    if (user && user.provider === "credential" && user.role === "student") {
       const isMatch = await bcrypt.compare(password, user.password);
       if (isMatch) {
         return new NextResponse(JSON.stringify(user), { status: 200 });
@@ -28,11 +29,6 @@ export const POST = async (request) => {
       });
     }
   } catch {
-    return new NextResponse(
-      JSON.stringify({ message: "Server error occured" }),
-      {
-        status: 500,
-      }
-    );
+    serverError();
   }
 };

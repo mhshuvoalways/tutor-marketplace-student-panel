@@ -93,7 +93,7 @@ const Filter = ({ searchValue }) => {
       maxValue: searchValue?.maxRange,
     });
     setGender(searchValue?.gender);
-    setRating(searchValue?.rating || 3);
+    setRating(searchValue?.rating || 0);
   }, [searchValue]);
 
   return (
@@ -139,13 +139,7 @@ const Filter = ({ searchValue }) => {
       <div className="space-y-3">
         <p className="text-xl">Rating</p>
         <div className="flex items-center gap-2">
-          <Rating
-            edit={true}
-            activeColor="#facc15"
-            size={30}
-            value={rating}
-            ratingChanged={ratingHandler}
-          />
+          <Rating edit={true} value={rating} ratingChanged={ratingHandler} />
           <div className="flex items-center gap-0.5">
             <p className="font-medium">5.0</p>
             <p>/</p>

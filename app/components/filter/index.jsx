@@ -2,7 +2,7 @@ import Search from "@/app/components/common/search";
 import MainFilter from "@/app/components/filter/MainFilter";
 import Tutors from "@/app/components/filter/Tutors";
 import ShapeImage from "@/public/images/shape.png";
-import convertScheduleFormat from "@/services/convertScheduleFormat";
+import filterTurtors from "@/services/filterTurtors";
 import Image from "next/image";
 
 const Index = async ({ searchValue }) => {
@@ -15,47 +15,9 @@ const Index = async ({ searchValue }) => {
   });
 
   const result = await response.json();
-  const resultAvailability = convertScheduleFormat(await availability.json());
+  const resultAvailability = await availability.json();
 
-  const filteredTutors = result.filter((tutor) => {
-    const isLocationMatch =
-      !searchValue.address || tutor.location === searchValue.address;
-
-    const isGradeMatch =
-      !searchValue.grade ||
-      tutor.grades.some((grade) => grade.item === searchValue.grade);
-
-    const isSubjectMatch =
-      !searchValue.subject ||
-      tutor.subjects.some((subject) => subject.item === searchValue.subject);
-
-    const isGenderMatch =
-      !searchValue.gender || tutor.gender === searchValue.gender;
-
-    const isRatingMatch =
-      !searchValue.rating || tutor.rating >= searchValue.rating;
-
-    const isPriceRangeMatch =
-      (!searchValue.minRange || tutor.hourlyRate >= searchValue.minRange) &&
-      (!searchValue.maxRange || tutor.hourlyRate <= searchValue.maxRange);
-
-    return (
-      isLocationMatch &&
-      isGradeMatch &&
-      isSubjectMatch &&
-      isGenderMatch &&
-      isRatingMatch &&
-      isPriceRangeMatch
-    );
-  });
-
-  const sortedTutors = searchValue.sort
-    ? filteredTutors.sort((a, b) =>
-        searchValue.sort === "Price low to high"
-          ? a.hourlyRate - b.hourlyRate
-          : b.hourlyRate - a.hourlyRate
-      )
-    : filteredTutors;
+  const sortedTutors = filterTurtors(result, searchValue);
 
   return (
     <div className="container mx-auto px-5 py-20">

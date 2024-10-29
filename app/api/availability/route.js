@@ -1,5 +1,6 @@
 import { dbConnect } from "@/db/mongodb";
 import AvailabilityModel from "@/models/AvailabilityModel";
+import serverError from "@/services/serverError";
 import { NextResponse } from "next/server";
 
 export const GET = async () => {
@@ -8,11 +9,6 @@ export const GET = async () => {
     const response = await AvailabilityModel.find();
     return new NextResponse(JSON.stringify(response), { status: 200 });
   } catch {
-    return new NextResponse(
-      JSON.stringify({ message: "Server error occured" }),
-      {
-        status: 500,
-      }
-    );
+    serverError();
   }
 };

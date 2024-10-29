@@ -26,10 +26,7 @@ export const GET = async () => {
     };
     return new NextResponse(JSON.stringify(obj), { status: 200 });
   } catch {
-    return new NextResponse(
-      JSON.stringify({ message: "Server error occurred!" }),
-      { status: 500 }
-    );
+    return serverError();
   }
 };
 
@@ -49,18 +46,20 @@ export const PUT = async (request) => {
       { avatar: { public_id, url } }
     );
     Cloudinary.v2.uploader.destroy(response.avatar.public_id);
+    const obj = {
+      ...response._doc,
+      provider: authResponse.provider,
+      email: authResponse.email,
+    };
     return new NextResponse(
       JSON.stringify({
-        message: "Avatar is changed!",
-        response,
+        response: obj,
+        message: "Avatar updated!",
       }),
       { status: 200 }
     );
   } catch {
-    return new NextResponse(
-      JSON.stringify({ message: "Server error occured!" }),
-      { status: 500 }
-    );
+    return serverError();
   }
 };
 

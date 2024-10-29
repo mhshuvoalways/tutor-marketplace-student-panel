@@ -14,7 +14,7 @@ const Item = ({ image, name, jobTitle, startingFrom, grade, subject }) => {
           </div>
           <div className="flex items-center gap-2">
             <span>{jobTitle}</span>
-            <Rating value={4.5} activeColor="#ef4444" size={24} />
+            <Rating value={5} edit={false} />
           </div>
         </div>
       </div>

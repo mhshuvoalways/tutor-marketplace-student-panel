@@ -1,16 +1,13 @@
-"use client";
+import { Rating } from "@smastrom/react-rating";
+import "@smastrom/react-rating/style.css";
 
-import Rating from "react-rating";
-
-const index = ({ value = 5, edit, ratingChanged }) => {
+const index = ({ value, edit, ratingChanged }) => {
   return (
     <Rating
-      initialRating={value}
-      emptySymbol="fa-regular fa-star"
-      readonly={edit ? false : true}
-      fullSymbol="fa-solid fa-star"
-      fractions={2}
-      className="text-yellow-500 text-xl"
+      key={value}
+      value={Number(value)}
+      readOnly={edit ? false : true}
+      className="text-yellow-500 text-xl max-w-32"
       onChange={ratingChanged}
     />
   );
