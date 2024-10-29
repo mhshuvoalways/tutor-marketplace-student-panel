@@ -1,13 +1,9 @@
 import Button1 from "@/app/components/common/button/Button1";
-import { useSession } from "next-auth/react";
-import Link from "next/link";
 import { useEffect, useState } from "react";
 
 const Time = ({ timeSlots, submitHander, isBookClicked }) => {
   const [startedTime, setStartedTime] = useState("");
   const [endedTime, setEndedTime] = useState("");
-
-  const session = useSession();
 
   useEffect(() => {
     if (!startedTime) {
@@ -30,27 +26,15 @@ const Time = ({ timeSlots, submitHander, isBookClicked }) => {
         </p>
       </div>
       <div className="w-full sm:w-4/12">
-        {session.status === "authenticated" ? (
-          <Button1
-            title={"Book"}
-            className={
-              "!bg-green-500 hover:!bg-green-600 border border-green-600"
-            }
-            isClicked={isBookClicked}
-            icon={true}
-            onClick={() => submitHander(startedTime, endedTime)}
-          />
-        ) : (
-          <Link href={"/login"}>
-            <Button1
-              title={"Book"}
-              className={
-                "!bg-green-500 hover:!bg-green-600 border border-green-600"
-              }
-              icon={true}
-            />
-          </Link>
-        )}
+        <Button1
+          title={"Book"}
+          className={
+            "!bg-green-500 hover:!bg-green-600 border border-green-600"
+          }
+          isClicked={isBookClicked}
+          icon={true}
+          onClick={() => submitHander(startedTime, endedTime)}
+        />
       </div>
     </div>
   );

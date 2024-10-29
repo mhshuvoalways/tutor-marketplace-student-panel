@@ -79,6 +79,8 @@ const BookTutor = ({ tutorProfile, availability, hourlyRate, session }) => {
           router.push("/all-booking");
         }
       }
+    } else if (res.status === 400) {
+      router.push("/login");
     } else {
       setLoading(false);
       const { message } = await res.json();

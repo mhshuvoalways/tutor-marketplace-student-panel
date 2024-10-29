@@ -28,6 +28,12 @@ export const POST = async (request) => {
     } = await request.json();
     const { auth } = NextAuth(authConfig);
     const mySession = await auth();
+    if (!mySession) {
+      return NextResponse.json(
+        { message: "Please login before booking!" },
+        { status: 400 }
+      );
+    }
     const studentEmail = mySession.user.email;
 
     const studentAuthResponse = await AuthModel.findOne({
