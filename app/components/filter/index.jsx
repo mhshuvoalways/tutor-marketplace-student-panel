@@ -7,15 +7,11 @@ import Image from "next/image";
 
 const Index = async ({ searchValue }) => {
   const response = await fetch(`${process.env.BASE_URL}/api/tutor`, {
-    next: {
-      revalidate: 0,
-    },
+    cache: "no-store",
   });
 
   const availability = await fetch(`${process.env.BASE_URL}/api/availability`, {
-    next: {
-      revalidate: 0,
-    },
+    cache: "no-store",
   });
 
   const result = await response.json();
