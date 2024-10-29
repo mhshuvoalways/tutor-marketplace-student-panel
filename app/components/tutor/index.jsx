@@ -5,7 +5,7 @@ import TutorDetails from "@/app/components/tutor/TutorDetails";
 
 const Index = async ({ tutorId }) => {
   const response = await fetch(`${process.env.BASE_URL}/api/tutor/${tutorId}`, {
-    cache: "no-store",
+    cache: "no-cache",
   });
 
   const result = await response.json();
