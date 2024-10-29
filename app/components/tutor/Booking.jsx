@@ -121,39 +121,38 @@ const BookTutor = ({ tutorProfile, availability, hourlyRate, session }) => {
   }
 
   return (
-    <div className="shadow bg-white rounded p-5 space-y-5 font-outfit booking transition-all">
-      <Calendly dateHandler={dateHandler} />
-      {loading ? (
-        <Image src={Loading} alt="loading" className="mx-auto" />
-      ) : finalResult.length ? (
-        finalResult.map((el, index) => (
-          <div key={index}>
-            <SessionProvider>
-              <Time
-                timeSlots={el}
-                hourlyRate={hourlyRate}
-                submitHander={submitHander}
-                isBookClicked={loading}
-              />
-            </SessionProvider>
-          </div>
-        ))
-      ) : (
-        <p className="text-center text-lg pt-2 text-red-400">Not available</p>
-      )}
-      <div>
-        <CardElement
-          onChange={cardOnChange}
-          className={`border rounded px-2 py-4 ${
-            paymentError
-              ? "border-red-400 hover:border-red-400"
-              : "hover:border-primary"
-          }`}
-        />
-        {paymentError && <p className="text-red-400 mt-2">{paymentError}</p>}
+    <SessionProvider>
+      <div className="shadow bg-white rounded p-5 space-y-5 font-outfit booking transition-all">
+        <Calendly dateHandler={dateHandler} />
+        {loading ? (
+          <Image src={Loading} alt="loading" className="mx-auto" />
+        ) : finalResult.length ? (
+          finalResult.map((el, index) => (
+            <Time
+              key={index}
+              timeSlots={el}
+              hourlyRate={hourlyRate}
+              submitHander={submitHander}
+              isBookClicked={loading}
+            />
+          ))
+        ) : (
+          <p className="text-center text-lg pt-2 text-red-400">Not available</p>
+        )}
+        <div>
+          <CardElement
+            onChange={cardOnChange}
+            className={`border rounded px-2 py-4 ${
+              paymentError
+                ? "border-red-400 hover:border-red-400"
+                : "hover:border-primary"
+            }`}
+          />
+          {paymentError && <p className="text-red-400 mt-2">{paymentError}</p>}
+        </div>
+        {loading && <p className="inset-0 fixed z-50"></p>}
       </div>
-      {loading && <p className="inset-0 fixed z-50"></p>}
-    </div>
+    </SessionProvider>
   );
 };
 
