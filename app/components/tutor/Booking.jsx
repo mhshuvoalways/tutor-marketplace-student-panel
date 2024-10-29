@@ -11,6 +11,7 @@ import {
   useStripe,
 } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
+import { SessionProvider } from "next-auth/react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -126,13 +127,16 @@ const BookTutor = ({ tutorProfile, availability, hourlyRate, session }) => {
         <Image src={Loading} alt="loading" className="mx-auto" />
       ) : finalResult.length ? (
         finalResult.map((el, index) => (
-          <Time
-            key={index}
-            timeSlots={el}
-            hourlyRate={hourlyRate}
-            submitHander={submitHander}
-            isBookClicked={loading}
-          />
+          <div key={index}>
+            <SessionProvider>
+              <Time
+                timeSlots={el}
+                hourlyRate={hourlyRate}
+                submitHander={submitHander}
+                isBookClicked={loading}
+              />
+            </SessionProvider>
+          </div>
         ))
       ) : (
         <p className="text-center text-lg pt-2 text-red-400">Not available</p>
