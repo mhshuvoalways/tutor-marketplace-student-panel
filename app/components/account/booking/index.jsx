@@ -11,7 +11,7 @@ const index = async ({ bookingId }) => {
   const response = await fetch(
     `${process.env.BASE_URL}/api/booking/myBooking/${email}`,
     {
-      cache: "no-cache",
+      cache: "no-store",
     }
   );
   const result = await response.json();
