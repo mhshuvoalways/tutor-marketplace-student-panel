@@ -4,17 +4,16 @@ import Tutors from "@/app/components/filter/Tutors";
 import ShapeImage from "@/public/images/shape.png";
 import filterTurtors from "@/services/filterTurtors";
 import Image from "next/image";
+export const dynamic = "force-dynamic";
 
 const Index = async ({ searchValue }) => {
   const response = await fetch(`${process.env.BASE_URL}/api/tutor`, {
-    cache: "no-store",
     next: {
       revalidate: 0,
     },
   });
 
   const availability = await fetch(`${process.env.BASE_URL}/api/availability`, {
-    cache: "no-store",
     next: {
       revalidate: 0,
     },
