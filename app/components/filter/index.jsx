@@ -8,13 +8,13 @@ import Image from "next/image";
 const Index = async ({ searchValue }) => {
   const response = await fetch(`${process.env.BASE_URL}/api/tutor`, {
     next: {
-      revalidate: 5,
+      revalidate: 0,
     },
   });
 
   const availability = await fetch(`${process.env.BASE_URL}/api/availability`, {
     next: {
-      revalidate: 5,
+      revalidate: 0,
     },
   });
 
