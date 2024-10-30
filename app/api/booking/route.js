@@ -31,25 +31,37 @@ export const POST = async (request) => {
     if (!mySession) {
       return NextResponse.json(
         { message: "Please login before booking!" },
-        { status: 400 }
+        { status: 401 }
       );
     }
     const studentEmail = mySession.user.email;
-
     const studentAuthResponse = await AuthModel.findOne({
       email: studentEmail,
     });
+    if (!studentAuthResponse) {
+      return NextResponse.json(
+        { message: "Student not found!" },
+        { status: 404 }
+      );
+    }
 
     const { _id: studentId } = studentAuthResponse;
 
     const studentProfile = await StudentProfileModel.findOne({
       user: studentId,
     });
-
+    if (!studentProfile) {
+      return NextResponse.json(
+        { message: "Student profile not found!" },
+        { status: 404 }
+      );
+    }
     const { name: studentName } = studentProfile;
 
     const tutorAuthResponse = await AuthModel.findById(tutorId);
-
+    if (!tutorAuthResponse) {
+      return NextResponse.json({ message: "Tutor not found!" }, { status: 404 });
+    }
     const { email: tutorEmail } = tutorAuthResponse;
 
     const amount = session * hourlyRate;
@@ -68,12 +80,15 @@ export const POST = async (request) => {
     }
 
     const adminResponse = await AdminProfileModel.findOne();
+    if (!adminResponse) {
+      return NextResponse.json({ message: "Admin profile not found!" }, { status: 404 });
+    }
     const platformCharge =
       amount - (amount * adminResponse.platformCharge) / 100;
 
     await TutorProfileModel.findOneAndUpdate(
       { user: tutorId },
-      { $inc: { balance: 10 } }
+      { $inc: { balance: platformCharge } }
     );
 
     const meetingObj = await zoomHandler({ date, session, timeZone });
