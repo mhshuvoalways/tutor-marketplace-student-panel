@@ -8,7 +8,6 @@ import GoogleIcon from "@/public/icons/google.png";
 import LoginImage from "@/public/images/login.png";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 const SignUpPage = () => {
@@ -18,6 +17,8 @@ const SignUpPage = () => {
     password: "",
   });
 
+  const [success, setSuccess] = useState("");
+
   const [userError, setUserError] = useState({
     name: "",
     email: "",
@@ -26,8 +27,6 @@ const SignUpPage = () => {
   });
 
   const [isClicked, setIsClicked] = useState(false);
-
-  const router = useRouter();
 
   const changeHandler = (event) => {
     setUser({
@@ -39,19 +38,23 @@ const SignUpPage = () => {
   const submitHandler = async () => {
     setIsClicked(true);
     try {
-      await signUpSchema.parseAsync(user);
-      const response = await fetch(`/api/auth/signup`, {
-        method: "POST",
-        headers: {
-          "content-type": "application/json",
-        },
-        body: JSON.stringify(user),
-      });
-      setIsClicked(false);
-      if (response.status === 200) {
-        router.push("/login");
-      } else {
-        setUserError(await response.json());
+      try {
+        await signUpSchema.parseAsync(user);
+        const response = await fetch(`/api/auth/signup`, {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify(user),
+        });
+        setIsClicked(false);
+        if (response.status === 200) {
+          setSuccess("Please check your email to verify your account!");
+        } else {
+          setUserError(await response.json());
+        }
+      } catch (error) {
+        setUserError(error.message);
       }
     } catch (errors) {
       setIsClicked(false);
@@ -138,6 +141,7 @@ const SignUpPage = () => {
               <Image src={GoogleIcon} alt="" className="size-5" />
               <button className="">Login with google</button>
             </div>
+            {success && <p className="text-green-400 text-center">{success}</p>}
             {userError.message && (
               <p className="text-red-400 text-center">{userError.message}</p>
             )}

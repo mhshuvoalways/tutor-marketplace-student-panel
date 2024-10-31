@@ -1,3 +1,4 @@
+import { verifyEmail } from "@/app/api/services/verifyEmail";
 import { dbConnect } from "@/db/mongodb";
 import AuthModel from "@/models/AuthModel";
 import ProfileModel from "@/models/ProfileModel";
@@ -22,6 +23,7 @@ export const POST = async (request) => {
         name,
         user: auth._id,
       };
+      verifyEmail({ ...profileObj, email });
       const response = await new ProfileModel(profileObj).save();
       return new NextResponse(JSON.stringify(response), { status: 200 });
     } else {

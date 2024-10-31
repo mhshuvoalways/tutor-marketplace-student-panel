@@ -60,7 +60,10 @@ export const POST = async (request) => {
 
     const tutorAuthResponse = await AuthModel.findById(tutorId);
     if (!tutorAuthResponse) {
-      return NextResponse.json({ message: "Tutor not found!" }, { status: 404 });
+      return NextResponse.json(
+        { message: "Tutor not found!" },
+        { status: 404 }
+      );
     }
     const { email: tutorEmail } = tutorAuthResponse;
 
@@ -81,10 +84,24 @@ export const POST = async (request) => {
 
     const adminResponse = await AdminProfileModel.findOne();
     if (!adminResponse) {
-      return NextResponse.json({ message: "Admin profile not found!" }, { status: 404 });
+      return NextResponse.json(
+        { message: "Admin profile not found!" },
+        { status: 404 }
+      );
     }
+
+    const tutorResponse = TutorProfileModel.findOne({ user: tutorId });
+    if (!tutorResponse) {
+      return NextResponse.json(
+        { message: "Tutor profile not found!" },
+        { status: 404 }
+      );
+    }
+
     const platformCharge =
-      amount - (amount * adminResponse.platformCharge) / 100;
+      amount -
+      (amount * (tutorResponse.percentage || adminResponse.platformCharge)) /
+        100;
 
     await TutorProfileModel.findOneAndUpdate(
       { user: tutorId },
