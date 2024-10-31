@@ -2,6 +2,7 @@ import { dbConnect } from "@/db/mongodb";
 import Booking from "@/models/Booking";
 import serverError from "@/services/serverError";
 import { NextResponse } from "next/server";
+export const dynamic = "force-dynamic";
 
 export const POST = async (request, { params }) => {
   try {
