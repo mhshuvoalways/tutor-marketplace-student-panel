@@ -34,9 +34,7 @@ const Reviws = ({ bookings }) => {
                       </p>
                     </div>
                     <div className="flex items-center gap-2">
-                      <p className="font-medium">
-                        {rating.review.toFixed(2)}.0
-                      </p>
+                      <p className="font-medium">{rating.review.toFixed(2)}</p>
                       <Rating size={24} value={rating.review.toFixed(2)} />
                     </div>
                     <p className="mt-3 text-gray-500">{rating.reviewText}</p>

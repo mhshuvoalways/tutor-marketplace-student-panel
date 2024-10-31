@@ -3,6 +3,7 @@
 import { socialLogin } from "@/actions";
 import Button from "@/app/components/common/button/Button1";
 import Input from "@/app/components/common/input/Input";
+import Recaptcha from "@/app/components/common/input/Recaptcha";
 import { signUpSchema } from "@/lib/utils/validations/auth";
 import GoogleIcon from "@/public/icons/google.png";
 import LoginImage from "@/public/images/login.png";
@@ -15,6 +16,7 @@ const SignUpPage = () => {
     name: "",
     email: "",
     password: "",
+    recaptcha: "",
   });
 
   const [success, setSuccess] = useState("");
@@ -23,23 +25,39 @@ const SignUpPage = () => {
     name: "",
     email: "",
     password: "",
+    recaptcha: "",
     message: "",
   });
 
   const [isClicked, setIsClicked] = useState(false);
 
   const changeHandler = (event) => {
+    setUserError({
+      ...userError,
+      [event.target.name]: "",
+    });
     setUser({
       ...user,
       [event.target.name]: event.target.value,
     });
   };
 
+  const recaptchaOnChange = (value) => {
+    setUserError({
+      ...userError,
+      recaptcha: "",
+    });
+    setUser({
+      ...user,
+      recaptcha: value,
+    });
+  };
+
   const submitHandler = async () => {
     setIsClicked(true);
     try {
+      await signUpSchema.parseAsync(user);
       try {
-        await signUpSchema.parseAsync(user);
         const response = await fetch(`/api/auth/signup`, {
           method: "POST",
           headers: {
@@ -110,6 +128,12 @@ const SignUpPage = () => {
               />
               {userError.password && (
                 <p className="text-red-400 text-left">{userError.password}</p>
+              )}
+            </div>
+            <div>
+              <Recaptcha onChange={recaptchaOnChange} />
+              {userError.recaptcha && (
+                <p className="text-red-400 text-left">{userError.recaptcha}</p>
               )}
             </div>
             <div className="flex justify-between gap-2">

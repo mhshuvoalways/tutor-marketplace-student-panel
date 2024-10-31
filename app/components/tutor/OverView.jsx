@@ -41,7 +41,7 @@ const Tutors = ({ result }) => {
                 </div>
                 <div className="flex items-center gap-x-1.5 font-outfit">
                   <p className="font-semibold">
-                    {totalReviews / reviewsLength || 0}
+                    {(totalReviews / reviewsLength).toFixed(2) || 0}
                   </p>
                   <Rating value={totalReviews / reviewsLength || 0} />
                   <p className="text-gray-500">({reviewsLength || 0})</p>
