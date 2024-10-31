@@ -6,8 +6,6 @@ import { NextResponse } from "next/server";
 
 export const POST = async (request) => {
   const { token } = await request.json();
-  console.log(token);
-  
   try {
     const result = await jwt.verify(token, process.env.AUTH_SECRET);
     try {

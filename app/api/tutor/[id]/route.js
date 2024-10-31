@@ -8,6 +8,7 @@ import TutorProfileModel from "@/models/TutorProfileModel";
 import convertScheduleFormat from "@/services/convertScheduleFormat";
 import serverError from "@/services/serverError";
 import { NextResponse } from "next/server";
+export const dynamic = "force-dynamic";
 
 export const GET = async (_, { params }) => {
   try {

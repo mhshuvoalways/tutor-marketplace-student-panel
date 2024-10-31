@@ -12,6 +12,7 @@ import serverError from "@/services/serverError";
 import moment from "moment";
 import NextAuth from "next-auth";
 import { NextResponse } from "next/server";
+export const dynamic = "force-dynamic";
 
 export const POST = async (request) => {
   try {
