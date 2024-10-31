@@ -44,7 +44,7 @@ const Tutors = ({ result }) => {
                     {totalReviews / reviewsLength || 0}
                   </p>
                   <Rating value={totalReviews / reviewsLength || 0} />
-                  <p className="text-gray-500">({totalReviews || 0})</p>
+                  <p className="text-gray-500">({reviewsLength || 0})</p>
                 </div>
               </div>
             </div>
