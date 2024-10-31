@@ -37,8 +37,10 @@ const Tutors = ({ tutor, availability }) => {
                   <span>{tutor.location}</span>
                 </div>
                 <div className="flex items-center gap-x-1.5 font-outfit">
-                  <p className="font-semibold">{tutor.averageReview || 0}</p>
-                  <Rating value={tutor.averageReview || 0} />
+                  <p className="font-semibold">
+                    {tutor.averageReview?.toFixed(2) || 0}
+                  </p>
+                  <Rating value={tutor.averageReview?.toFixed(2) || 0} />
                   <p className="text-gray-500">({tutor.totalReviews || 0})</p>
                 </div>
               </div>
