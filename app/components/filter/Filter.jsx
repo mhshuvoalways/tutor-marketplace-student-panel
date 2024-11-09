@@ -14,22 +14,13 @@ const gradeItems = [
   { _id: 2, item: "Price low to high" },
 ];
 
-const methodItem = [
-  { _id: 0, item: "Select a method" },
-  { _id: 1, item: "Online" },
-  { _id: 2, item: "In-Person" },
-];
-
 const Filter = ({ searchValue }) => {
   const [priceSort, setPriceSort] = useState("");
   const [priceRange, setPriceRange] = useState({
     minValue: "",
     maxValue: "",
   });
-  const [method, setMethod] = useState("");
-  const [miles, setMiles] = useState("");
   const [rating, setRating] = useState();
-  const [methodError, setMethodError] = useState("");
 
   const router = useRouter();
 
@@ -44,22 +35,11 @@ const Filter = ({ searchValue }) => {
     });
   };
 
-  const methodHandler = (value) => {
-    setMethodError("");
-    setMethod(value.item);
-  };
-
-  const milesHandler = (event) => {
-    setMethodError("");
-    setMiles(event.target.value);
-  };
-
   const ratingHandler = (value) => {
     setRating(value);
   };
 
   const searchHandler = () => {
-    setMethodError("");
     const queryParams = { ...searchValue };
     if (priceSort) {
       queryParams.sort = priceSort;
@@ -76,24 +56,6 @@ const Filter = ({ searchValue }) => {
     } else {
       delete queryParams.maxRange;
     }
-    if (method) {
-      if (method === "In-Person") {
-        if (miles) {
-          queryParams.method = method;
-          queryParams.miles = miles;
-        } else {
-          delete queryParams.miles;
-          setMethodError("Miles is required for in-person tutoring");
-        }
-      } else {
-        queryParams.method = method;
-        delete queryParams.miles;
-      }
-    } else {
-      delete queryParams.method;
-      delete queryParams.miles;
-    }
-
     if (rating) {
       queryParams.rating = rating;
     } else {
@@ -113,14 +75,13 @@ const Filter = ({ searchValue }) => {
       minValue: searchValue?.minRange,
       maxValue: searchValue?.maxRange,
     });
-    setMethod(searchValue?.method);
     setRating(searchValue?.rating || 0);
   }, [searchValue]);
 
   return (
     <>
       <p>More Filter</p>
-      <div className="space-y-3 pt-5">
+      <div className="space-y-3">
         <p className="text-xl">Sort</p>
         <ListBox
           items={gradeItems}
@@ -129,33 +90,6 @@ const Filter = ({ searchValue }) => {
           value={priceSort}
         />
       </div>
-      <div className="space-y-3">
-        <p className="text-xl">Method</p>
-        <ListBox
-          items={methodItem}
-          filter={true}
-          onChange={methodHandler}
-          value={method}
-        />
-      </div>
-      {method === "In-Person" && (
-        <div>
-          <div className="space-y-3">
-            <p className="text-xl">Miles</p>
-            <Input
-              type="text"
-              placeholder="Miles"
-              name={"miles"}
-              changeHandler={milesHandler}
-              value={miles}
-            />
-          </div>
-          {methodError && (
-            <p className="text-red-400 text-left">{methodError}</p>
-          )}
-        </div>
-      )}
-
       <div className="space-y-3">
         <p className="text-xl">Price range</p>
         <div className="flex items-center gap-2">

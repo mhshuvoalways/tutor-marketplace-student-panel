@@ -27,7 +27,7 @@ const profileModel = new Schema(
       address: String,
       lat: Number,
       lng: Number,
-      kilometers: Number,
+      miles: Number,
     },
     session: {
       type: Number,

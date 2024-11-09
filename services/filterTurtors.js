@@ -5,16 +5,19 @@ const filterTutors = (result, searchValue) => {
     const isLocationMatch =
       !searchValue.address || tutor.location?.address === searchValue.address;
 
+    const isOnlineMatch =
+      !searchValue.method || tutor.availableOn.includes(searchValue.method);
+
     const isWithinRadius =
-      !searchValue.miles ||
-      !searchValue.lat ||
-      !searchValue.lng ||
-      calculateDistance(
-        searchValue.lat,
-        searchValue.lng,
-        tutor.location?.lat,
-        tutor.location?.lng
-      ) <= searchValue.miles;
+      searchValue.method !== "In-Person" ||
+      (searchValue.lat &&
+        searchValue.lng &&
+        calculateDistance(
+          Number(searchValue.lat),
+          Number(searchValue.lng),
+          Number(tutor.location?.lat),
+          Number(tutor.location?.lng)
+        ) <= tutor.miles);
 
     const isGradeMatch =
       !searchValue.grade ||
@@ -33,6 +36,7 @@ const filterTutors = (result, searchValue) => {
 
     return (
       isLocationMatch &&
+      isOnlineMatch &&
       isWithinRadius &&
       isGradeMatch &&
       isSubjectMatch &&

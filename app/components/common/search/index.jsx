@@ -1,19 +1,36 @@
 "use client";
 
 import ListBox from "@/app/components/common/headlessui/ListBox";
-import { Book, GraduationCap, MapPin } from "lucide-react";
+import { Book, GraduationCap, MapPin, Video } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import Autocomplete from "react-google-autocomplete";
 
+const methods = [
+  {
+    _id: 0,
+    item: "Select a method",
+  },
+  {
+    _id: 1,
+    item: "Online",
+  },
+  {
+    _id: 2,
+    item: "In-Person",
+  },
+];
+
 const Search = ({ searchValue }) => {
   const [searchValues, setSearchValues] = useState({
     address: "",
+    method: "",
     lat: "",
     lng: "",
     grade: "",
     subject: "",
   });
+  const [methodError, setMethodError] = useState("");
 
   const [grades, setGrades] = useState([]);
   const [subjects, setSubjects] = useState([]);
@@ -21,12 +38,21 @@ const Search = ({ searchValue }) => {
   const router = useRouter();
 
   const addressHandler = (value) => {
+    setMethodError("");
     setSearchValues((prevValues) => ({
       ...prevValues,
       address: value?.formatted_address,
-      lat: value?.geometry.location.lat(),
-      lng: value?.geometry.location.lng(),
+      lat: value?.geometry?.location.lat(),
+      lng: value?.geometry?.location.lng(),
     }));
+  };
+
+  const methodHander = (method) => {
+    setMethodError("");
+    setSearchValues({
+      ...searchValues,
+      method: method?.item,
+    });
   };
 
   const gradeHandler = (grade) => {
@@ -74,15 +100,37 @@ const Search = ({ searchValue }) => {
   }, []);
 
   const searchHandler = () => {
+    setMethodError("");
     const queryParams = { ...searchValue };
-    if (searchValues?.address && searchValues?.lat && searchValues?.lng) {
-      queryParams.address = searchValues?.address;
-      queryParams.lat = searchValues?.lat;
-      queryParams.lng = searchValues?.lng;
+    if (searchValues?.method === "In-Person") {
+      if (
+        searchValues?.address &&
+        searchValues?.lat &&
+        searchValues?.lng &&
+        searchValues?.method
+      ) {
+        queryParams.method = searchValues.method;
+        queryParams.address = searchValues.address;
+        queryParams.lat = searchValues.lat;
+        queryParams.lng = searchValues.lng;
+      } else {
+        delete queryParams.method;
+        delete queryParams.address;
+        delete queryParams.lat;
+        delete queryParams.lng;
+        setMethodError("Address is required for in-person tutoring");
+      }
     } else {
-      delete queryParams.address;
-      delete queryParams.lat;
-      delete queryParams.lng;
+      queryParams.method = searchValues?.method;
+      if (searchValues?.address && searchValues?.lat && searchValues?.lng) {
+        queryParams.address = searchValues.address;
+        queryParams.lat = searchValues.lat;
+        queryParams.lng = searchValues.lng;
+      } else {
+        delete queryParams.address;
+        delete queryParams.lat;
+        delete queryParams.lng;
+      }
     }
     if (searchValues?.grade) {
       queryParams.grade = searchValues?.grade;
@@ -102,7 +150,8 @@ const Search = ({ searchValue }) => {
     if (
       !searchValues?.grade &&
       !searchValues?.subject &&
-      !searchValues?.address
+      !searchValues?.address &&
+      !searchValues?.method
     ) {
       setSearchValues(searchValue);
     }
@@ -110,15 +159,28 @@ const Search = ({ searchValue }) => {
 
   return (
     <div className="flex items-center justify-between flex-wrap gap-x-2 gap-y-6 bg-white shadow rounded px-5 py-5 md:py-2">
+      <div>
+        <div className="flex items-center gap-x-2">
+          <div>
+            <MapPin className="text-gray-700 size-6" />
+          </div>
+          <Autocomplete
+            apiKey={process.env.GOOGLE_MAPS_API_KEY}
+            onPlaceSelected={(place) => addressHandler(place)}
+            className={`outline-0 text-gray-700 font-outfit `}
+            defaultValue={searchValues?.address}
+          />
+        </div>
+        {methodError && <p className="text-red-400">{methodError}</p>}
+      </div>
       <div className="flex items-center gap-x-2">
         <div>
-          <MapPin className="text-gray-700 size-6" />
+          <Video className="text-gray-700 size-6" />
         </div>
-        <Autocomplete
-          apiKey={process.env.GOOGLE_MAPS_API_KEY}
-          onPlaceSelected={(place) => addressHandler(place)}
-          className="outline-0 text-gray-700 font-outfit"
-          defaultValue={searchValues?.address}
+        <ListBox
+          items={methods}
+          onChange={methodHander}
+          value={searchValues?.method}
         />
       </div>
       <div className="flex items-center gap-x-2">
