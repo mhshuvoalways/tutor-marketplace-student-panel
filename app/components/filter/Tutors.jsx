@@ -34,7 +34,7 @@ const Tutors = ({ tutor, availability }) => {
               <div className="flex items-center gap-x-5">
                 <div className="flex items-center gap-x-1 text-gray-500">
                   <MapPin />
-                  <span>{tutor.location}</span>
+                  <span>{tutor.location?.address}</span>
                 </div>
                 <div className="flex items-center gap-x-1.5 font-outfit">
                   <p className="font-semibold">
@@ -73,11 +73,8 @@ const Tutors = ({ tutor, availability }) => {
                   className="inline-flex items-center justify-center gap-x-3 sm:gap-x-5 bg-slate-50 py-2 px-3 w-full rounded"
                   key={index}
                 >
-                  {method === "Online" && <Video className="text-red-400" />}
-                  {method === "Tutor place" && (
-                    <MapPin className="text-red-400" />
-                  )}
-                  {method === "Student place" && (
+                  {method === "Online" && <Video className="text-green-400" />}
+                  {method === "In-Person" && (
                     <MapPin className="text-red-400" />
                   )}
                   <p>{method}</p>

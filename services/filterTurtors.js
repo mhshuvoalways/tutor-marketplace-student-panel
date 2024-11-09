@@ -1,7 +1,20 @@
+import calculateDistance from "@/services/calculateDistance";
+
 const filterTutors = (result, searchValue) => {
   const filteredTutors = result.filter((tutor) => {
     const isLocationMatch =
-      !searchValue.address || tutor.location === searchValue.address;
+      !searchValue.address || tutor.location?.address === searchValue.address;
+
+    const isWithinRadius =
+      !searchValue.miles ||
+      !searchValue.lat ||
+      !searchValue.lng ||
+      calculateDistance(
+        searchValue.lat,
+        searchValue.lng,
+        tutor.location?.lat,
+        tutor.location?.lng
+      ) <= searchValue.miles;
 
     const isGradeMatch =
       !searchValue.grade ||
@@ -10,9 +23,6 @@ const filterTutors = (result, searchValue) => {
     const isSubjectMatch =
       !searchValue.subject ||
       tutor.subjects.some((subject) => subject.item === searchValue.subject);
-
-    const isGenderMatch =
-      !searchValue.gender || tutor.gender === searchValue.gender;
 
     const isRatingMatch =
       !searchValue.rating || tutor.averageReview >= searchValue.rating;
@@ -23,9 +33,9 @@ const filterTutors = (result, searchValue) => {
 
     return (
       isLocationMatch &&
+      isWithinRadius &&
       isGradeMatch &&
       isSubjectMatch &&
-      isGenderMatch &&
       isRatingMatch &&
       isPriceRangeMatch
     );

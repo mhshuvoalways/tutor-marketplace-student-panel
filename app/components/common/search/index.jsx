@@ -9,6 +9,8 @@ import Autocomplete from "react-google-autocomplete";
 const Search = ({ searchValue }) => {
   const [searchValues, setSearchValues] = useState({
     address: "",
+    lat: "",
+    lng: "",
     grade: "",
     subject: "",
   });
@@ -18,10 +20,12 @@ const Search = ({ searchValue }) => {
 
   const router = useRouter();
 
-  const addressHandler = (place) => {
+  const addressHandler = (value) => {
     setSearchValues((prevValues) => ({
       ...prevValues,
-      address: place,
+      address: value?.formatted_address,
+      lat: value?.geometry.location.lat(),
+      lng: value?.geometry.location.lng(),
     }));
   };
 
@@ -71,10 +75,14 @@ const Search = ({ searchValue }) => {
 
   const searchHandler = () => {
     const queryParams = { ...searchValue };
-    if (searchValues?.address) {
+    if (searchValues?.address && searchValues?.lat && searchValues?.lng) {
       queryParams.address = searchValues?.address;
+      queryParams.lat = searchValues?.lat;
+      queryParams.lng = searchValues?.lng;
     } else {
       delete queryParams.address;
+      delete queryParams.lat;
+      delete queryParams.lng;
     }
     if (searchValues?.grade) {
       queryParams.grade = searchValues?.grade;
@@ -108,7 +116,7 @@ const Search = ({ searchValue }) => {
         </div>
         <Autocomplete
           apiKey={process.env.GOOGLE_MAPS_API_KEY}
-          onPlaceSelected={(place) => addressHandler(place?.formatted_address)}
+          onPlaceSelected={(place) => addressHandler(place)}
           className="outline-0 text-gray-700 font-outfit"
           defaultValue={searchValues?.address}
         />

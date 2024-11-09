@@ -89,10 +89,7 @@ const Tutors = ({ result }) => {
                   key={index}
                 >
                   {method === "Online" && <Video className="text-red-400" />}
-                  {method === "Tutor place" && (
-                    <MapPin className="text-red-400" />
-                  )}
-                  {method === "Student place" && (
+                  {method === "In-Person" && (
                     <MapPin className="text-red-400" />
                   )}
                   <p>{method}</p>

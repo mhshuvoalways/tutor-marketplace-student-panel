@@ -24,8 +24,10 @@ const profileModel = new Schema(
       trim: true,
     },
     location: {
-      type: String,
-      trim: true,
+      address: String,
+      lat: Number,
+      lng: Number,
+      kilometers: Number,
     },
     session: {
       type: Number,
