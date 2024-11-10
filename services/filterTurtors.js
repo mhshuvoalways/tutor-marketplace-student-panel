@@ -2,9 +2,6 @@ import calculateDistance from "@/services/calculateDistance";
 
 const filterTutors = (result, searchValue) => {
   const filteredTutors = result.filter((tutor) => {
-    const isLocationMatch =
-      !searchValue.address || tutor.location?.address === searchValue.address;
-
     const isOnlineMatch =
       !searchValue.method || tutor.availableOn.includes(searchValue.method);
 
@@ -12,12 +9,19 @@ const filterTutors = (result, searchValue) => {
       searchValue.method !== "In-Person" ||
       (searchValue.lat &&
         searchValue.lng &&
+        tutor.location?.lat &&
+        tutor.location?.lng &&
         calculateDistance(
           Number(searchValue.lat),
           Number(searchValue.lng),
-          Number(tutor.location?.lat),
-          Number(tutor.location?.lng)
+          Number(tutor.location.lat),
+          Number(tutor.location.lng)
         ) <= tutor.miles);
+
+    const isLocationMatch =
+      searchValue.method === "In-Person" ||
+      !searchValue.address ||
+      tutor.location?.address === searchValue.address;
 
     const isGradeMatch =
       !searchValue.grade ||

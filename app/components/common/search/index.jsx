@@ -159,6 +159,16 @@ const Search = ({ searchValue }) => {
 
   return (
     <div className="flex items-center justify-between flex-wrap gap-x-2 gap-y-6 bg-white shadow rounded px-5 py-5 md:py-2">
+      <div className="flex items-center gap-x-2">
+        <div>
+          <Video className="text-gray-700 size-6" />
+        </div>
+        <ListBox
+          items={methods}
+          onChange={methodHander}
+          value={searchValues?.method}
+        />
+      </div>
       <div>
         <div className="flex items-center gap-x-2">
           <div>
@@ -172,16 +182,6 @@ const Search = ({ searchValue }) => {
           />
         </div>
         {methodError && <p className="text-red-400">{methodError}</p>}
-      </div>
-      <div className="flex items-center gap-x-2">
-        <div>
-          <Video className="text-gray-700 size-6" />
-        </div>
-        <ListBox
-          items={methods}
-          onChange={methodHander}
-          value={searchValues?.method}
-        />
       </div>
       <div className="flex items-center gap-x-2">
         <div>
