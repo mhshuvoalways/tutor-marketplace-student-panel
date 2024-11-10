@@ -5,7 +5,7 @@ import ShapeImage from "@/public/images/shape.png";
 import filterTurtors from "@/services/filterTurtors";
 import Image from "next/image";
 
-const Index = async ({ searchValue }) => {
+const Index = async ({ searchValue, tutorPage }) => {
   const response = await fetch(`${process.env.BASE_URL}/api/tutor`, {
     cache: "no-store",
   });
@@ -26,7 +26,7 @@ const Index = async ({ searchValue }) => {
       </p>
       <div className="flex items-center gap-5 mt-10">
         <div className="w-full">
-          <Search searchValue={searchValue} />
+          <Search searchValue={searchValue} tutorPage={tutorPage} />
         </div>
         <div className="lg:flex items-center gap-5 hidden">
           <Image src={ShapeImage} alt="" />

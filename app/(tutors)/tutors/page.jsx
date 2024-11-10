@@ -5,7 +5,7 @@ const page = ({ searchParams }) => {
   return (
     <div className="mt-20">
       <MotionPrimitiveComponent>
-        <Filter searchValue={searchParams} />
+        <Filter searchValue={searchParams} tutorPage />
       </MotionPrimitiveComponent>
     </div>
   );

@@ -21,7 +21,7 @@ const methods = [
   },
 ];
 
-const Search = ({ searchValue }) => {
+const Search = ({ searchValue, tutorPage }) => {
   const [searchValues, setSearchValues] = useState({
     address: "",
     method: "",
@@ -158,7 +158,11 @@ const Search = ({ searchValue }) => {
   }, [searchValue, searchValues]);
 
   return (
-    <div className="flex items-center justify-between flex-wrap gap-x-2 gap-y-6 bg-white shadow rounded px-5 py-5 md:py-2">
+    <div
+      className={`grid grid-cols-1 items-center gap-x-2 gap-y-6 bg-white shadow rounded px-5 py-5 md:py-2 ${
+        tutorPage ? "md:grid-cols-5" : "md:grid-cols-2"
+      }`}
+    >
       <div className="flex items-center gap-x-2">
         <div>
           <Video className="text-gray-700 size-6" />
@@ -204,7 +208,7 @@ const Search = ({ searchValue }) => {
         />
       </div>
       <button
-        className="btn linearBtn text-white w-full md:w-auto"
+        className={`btn linearBtn text-white ${tutorPage ? "" : " col-span-2"}`}
         onClick={searchHandler}
       >
         Search
