@@ -4,7 +4,7 @@ import ListBox from "@/app/components/common/headlessui/ListBox";
 import { Book, GraduationCap, MapPin, Video } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import Autocomplete from "react-google-autocomplete";
+import GooglePlaceApi from "react-google-place-suggest";
 
 const methods = [
   {
@@ -42,8 +42,8 @@ const Search = ({ searchValue, tutorPage }) => {
     setSearchValues((prevValues) => ({
       ...prevValues,
       address: value?.formatted_address,
-      lat: value?.geometry?.location.lat(),
-      lng: value?.geometry?.location.lng(),
+      lat: value?.geometry?.location.lat,
+      lng: value?.geometry?.location.lng,
     }));
   };
 
@@ -118,10 +118,12 @@ const Search = ({ searchValue, tutorPage }) => {
         delete queryParams.address;
         delete queryParams.lat;
         delete queryParams.lng;
-        setMethodError("Address is required for in-person tutoring");
+        setMethodError("Required for in-person tutoring");
       }
     } else {
-      queryParams.method = searchValues?.method;
+      if (searchValues?.method) {
+        queryParams.method = searchValues?.method;
+      }
       if (searchValues?.address && searchValues?.lat && searchValues?.lng) {
         queryParams.address = searchValues.address;
         queryParams.lat = searchValues.lat;
@@ -174,15 +176,19 @@ const Search = ({ searchValue, tutorPage }) => {
         />
       </div>
       <div>
-        <div className="flex items-center gap-x-2">
+        <div className="flex items-center gap-x-2 relative">
           <div>
             <MapPin className="text-gray-700 size-6" />
           </div>
-          <Autocomplete
+          <GooglePlaceApi
+            handlePlaceSelect={addressHandler}
             apiKey={process.env.GOOGLE_MAPS_API_KEY}
-            onPlaceSelected={(place) => addressHandler(place)}
-            className={`outline-0 text-gray-700 font-outfit `}
-            defaultValue={searchValues?.address}
+            inputClass={{
+              border: "none",
+            }}
+            suggestionClass={{
+              top: "56px",
+            }}
           />
         </div>
         {methodError && <p className="text-red-400">{methodError}</p>}
