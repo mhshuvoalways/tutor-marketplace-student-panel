@@ -4,7 +4,7 @@ import ListBox from "@/app/components/common/headlessui/ListBox";
 import { Book, GraduationCap, MapPin, Video } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import GooglePlaceApi from "react-google-place-suggest";
+import GooglePlaceApi from "react-google-location-suggest";
 
 const methods = [
   {
@@ -181,7 +181,9 @@ const Search = ({ searchValue, tutorPage }) => {
             <MapPin className="text-gray-700 size-6" />
           </div>
           <GooglePlaceApi
-            handlePlaceSelect={addressHandler}
+            defaultValue={searchValues?.address}
+            placeholder="Enter address"
+            handleLocationSelect={addressHandler}
             apiKey={process.env.GOOGLE_MAPS_API_KEY}
             inputClass={{
               border: "none",
