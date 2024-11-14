@@ -37,11 +37,13 @@ const Tutors = ({ result }) => {
               <div className="flex items-center gap-x-5">
                 <div className="flex items-center gap-x-1 text-gray-500">
                   <MapPin />
-                  <span>{result?.location}</span>
+                  <span>{result?.location.address}</span>
                 </div>
                 <div className="flex items-center gap-x-1.5 font-outfit">
                   <p className="font-semibold">
-                    {(totalReviews / reviewsLength).toFixed(2) || 0}
+                    {(reviewsLength &&
+                      (totalReviews / reviewsLength).toFixed(2)) ||
+                      0}
                   </p>
                   <Rating value={totalReviews / reviewsLength || 0} />
                   <p className="text-gray-500">({reviewsLength || 0})</p>
