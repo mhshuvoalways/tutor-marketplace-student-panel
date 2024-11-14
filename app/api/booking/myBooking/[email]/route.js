@@ -18,15 +18,20 @@ export const GET = async (_, { params }) => {
     });
     const tutorProfiles = await Promise.all(
       response.map(async (el) => {
-        const tutorProfile = await TutorProfileModel.findOne({
-          user: el.tutor,
-        });
+        const [authTutorResponse, tutorProfile] = await Promise.all([
+          AuthModel.findOne({ _id: el.tutor }),
+          TutorProfileModel.findOne({ user: el.tutor }),
+        ]);
         return {
           ...el._doc,
-          tutorProfile,
+          tutorProfile: {
+            ...tutorProfile._doc,
+            email: authTutorResponse.email,
+          },
         };
       })
     );
+
     return new NextResponse(JSON.stringify(tutorProfiles), { status: 200 });
   } catch {
     return serverError();

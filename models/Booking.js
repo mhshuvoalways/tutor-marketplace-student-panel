@@ -42,14 +42,14 @@ const bookingModel = new Schema(
       type: Number,
       required: true,
     },
-    tutorJoinLink: {
-      type: String,
-      required: true,
-    },
-    studentJoinLink: {
-      type: String,
-      required: true,
-    },
+    // tutorJoinLink: {
+    //   type: String,
+    //   required: true,
+    // },
+    // studentJoinLink: {
+    //   type: String,
+    //   required: true,
+    // },
     review: {
       type: Number,
     },

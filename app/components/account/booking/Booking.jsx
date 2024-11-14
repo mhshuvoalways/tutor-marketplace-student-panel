@@ -5,6 +5,8 @@ import Image from "next/image";
 import Link from "next/link";
 
 const Booking = ({ result, bookingId }) => {
+  // console.log(result);
+
   return (
     <div className="bg-white rounded shadow-sm p-5 overflow-x-auto">
       {result.length ? (
@@ -13,11 +15,11 @@ const Booking = ({ result, bookingId }) => {
             <tr>
               <th className="text-left border-b pb-5 px-5">Tutor Image</th>
               <th className="text-left border-b pb-5 px-5">Tutor Name</th>
+              <th className="text-left border-b pb-5 px-5">Tutor Email</th>
               <th className="text-left border-b pb-5 px-5">Date</th>
               <th className="text-left border-b pb-5 px-5">Starting Time</th>
               <th className="text-left border-b pb-5 px-5">Session</th>
               <th className="text-left border-b pb-5 px-5">Fee</th>
-              <th className="text-left border-b pb-5 px-5">Join Link</th>
               <th className="text-left border-b pb-5 px-5">Review</th>
             </tr>
           </thead>
@@ -37,6 +39,9 @@ const Booking = ({ result, bookingId }) => {
                   {el.tutorProfile?.name}
                 </td>
                 <td className="text-left border-b py-5 px-5">
+                  {el.tutorProfile?.email}
+                </td>
+                <td className="text-left border-b py-5 px-5">
                   {moment(el.date).format("LL")}
                 </td>
                 <td className="text-left border-b py-5 px-5">
@@ -46,15 +51,7 @@ const Booking = ({ result, bookingId }) => {
                   {el.session} hr
                 </td>
                 <td className="text-left border-b py-5 px-5">${el.fee}</td>
-                <td className="text-left border-b py-5 px-5">
-                  <Link
-                    href={el.studentJoinLink}
-                    target="blank"
-                    className="underline"
-                  >
-                    Join Link
-                  </Link>
-                </td>
+
                 <td className="text-left border-b py-5 px-5">
                   <div>
                     {el.review ? (
