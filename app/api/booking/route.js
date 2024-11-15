@@ -1,5 +1,6 @@
 import { createPaymentIntent } from "@/app/api/services/createPaymentIntent";
 import { sendEmailHandler } from "@/app/api/services/resend";
+import { zoomHandler } from "@/app/api/services/zoom";
 import { authConfig } from "@/auth.config";
 import { dbConnect } from "@/db/mongodb";
 import AdminProfileModel from "@/models/AdminProfileModel";
@@ -108,7 +109,7 @@ export const POST = async (request) => {
       { $inc: { balance: platformCharge } }
     );
 
-    // const meetingObj = await zoomHandler({ date, session, timeZone });
+    const meetingObj = await zoomHandler({ date, session, timeZone });
 
     await new Booking({
       student: studentId,
@@ -120,8 +121,8 @@ export const POST = async (request) => {
       session,
       fee: amount,
       tutorFee: platformCharge,
-      // tutorJoinLink: meetingObj.start_url,
-      // studentJoinLink: meetingObj.join_url,
+      tutorJoinLink: meetingObj.start_url,
+      studentJoinLink: meetingObj.join_url,
     }).save();
 
     await sendEmailHandler({
@@ -134,8 +135,8 @@ export const POST = async (request) => {
       session,
       fee: amount,
       tutorFee: platformCharge,
-      // tutorJoinLink: meetingObj.start_url,
-      // studentJoinLink: meetingObj.join_url,
+      tutorJoinLink: meetingObj.start_url,
+      studentJoinLink: meetingObj.join_url,
     });
 
     return new NextResponse(

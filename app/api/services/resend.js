@@ -14,8 +14,8 @@ export const sendEmailHandler = async ({
   session,
   fee,
   tutorFee,
-  // tutorJoinLink,
-  // studentJoinLink,
+  tutorJoinLink,
+  studentJoinLink,
 }) => {
   await resend.emails.send({
     from: "Tim's Tutor <noreply@mhshuvo.com>",
@@ -28,8 +28,7 @@ export const sendEmailHandler = async ({
       startedTime,
       session,
       fee: tutorFee,
-      // tutorJoinLink,
-      studentEmail,
+      tutorJoinLink,
     }),
   });
   await resend.emails.send({
@@ -43,8 +42,7 @@ export const sendEmailHandler = async ({
       startedTime,
       session,
       fee,
-      // studentJoinLink,
-      tutorEmail,
+      studentJoinLink,
     }),
   });
 };
